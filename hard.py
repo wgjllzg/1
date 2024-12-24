@@ -2,10 +2,26 @@ from jetson_utils import videoSource, videoOutput, cudaFont, Log
 import sys
 import argparse
 
+parser = argparse.ArgumentParser(description="Classify a live camera stream using an image recognition DNN.",
+                                 formatter_class=argparse.RawTextHelpFormatter,
+                                 epilog=imageNet.Usage() + videoSource.Usage() + videoOutput.Usage() + Log.Usage())
+
+parser.add_argument("input", type=str, default="", nargs='?', help="URI of the input stream")
+parser.add_argument("output", type=str, default="", nargs='?', help="URI of the output stream")
+parser.add_argument("--network", type=str, default="googlenet",
+                    help="pre-trained model to load (see below for options)")
+parser.add_argument("--topK", type=int, default=1, help="show the topK number of class predictions (default: 1)")
+
+try:
+    args = parser.parse_known_args()[0]
+except:
+    print("")
+    parser.print_help()
+    sys.exit(0)
 
 # create video sources & outputs
-input = videoSource("", argv=sys.argv)
-output = videoOutput("", argv=sys.argv)
+input = videoSource(args.input, argv=sys.argv)
+output = videoOutput(args.output, argv=sys.argv)
 font = cudaFont()
 
 while True:
