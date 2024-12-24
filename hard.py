@@ -1,61 +1,47 @@
-from jetson_utils import videoSource, videoOutput, cudaFont, Log
-import sys
-import argparse
+import cv2
 
-parser = argparse.ArgumentParser(description="Classify a live camera stream using an image recognition DNN.",
-                                 formatter_class=argparse.RawTextHelpFormatter,
-                                 epilog=imageNet.Usage() + videoSource.Usage() + videoOutput.Usage() + Log.Usage())
-
-parser.add_argument("input", type=str, default="", nargs='?', help="URI of the input stream")
-parser.add_argument("output", type=str, default="", nargs='?', help="URI of the output stream")
-parser.add_argument("--network", type=str, default="googlenet",
-                    help="pre-trained model to load (see below for options)")
-parser.add_argument("--topK", type=int, default=1, help="show the topK number of class predictions (default: 1)")
-
-try:
-    args = parser.parse_known_args()[0]
-except:
-    print("")
-    parser.print_help()
-    sys.exit(0)
-
-# create video sources & outputs
-input = videoSource(args.input, argv=sys.argv)
-output = videoOutput(args.output, argv=sys.argv)
-font = cudaFont()
-
-while True:
-    # capture the next image
-    img = input.Capture()
-
-    if img is None:  # timeout
-        continue
-
-    #     # classify the image and get the topK predictions
-    # # if you only want the top class, you can simply run:
-    # #   class_id, confidence = net.Classify(img)
-    # predictions = net.Classify(img, topK=args.topK)
-    #
-    # # draw predicted class labels
-    # for n, (classID, confidence) in enumerate(predictions):
-    #     classLabel = net.GetClassLabel(classID)
-    #     confidence *= 100.0
-    #
-    #     print(f"imagenet:  {confidence:05.2f}% class #{classID} ({classLabel})")
-    #
-    #     font.OverlayText(img, text=f"{confidence:05.2f}% {classLabel}",
-    #                      x=5, y=5 + n * (font.GetSize() + 5),
-    #                      color=font.White, background=font.Gray40)
-
-    # render the image
-    output.Render(img)
-
-    # # update the title bar
-    # output.SetStatus("{:s} | Network {:.0f} FPS".format(net.GetNetworkName(), net.GetNetworkFPS()))
-    #
-    # # print out performance info
-    # net.PrintProfilerTimes()
-
-    # exit on input/output EOS
-    if not input.IsStreaming() or not output.IsStreaming():
-        break
+def gstreamer_pipeline(
+    capture_width=1280,
+    capture_height=720,
+    display_width=1280,
+    display_height=720,
+    framerate=60,
+    flip_method=0,
+):
+    return (
+        "nvarguscamerasrc ! "
+        "video/x-raw(memory:NVMM), "
+        "width=(int)%d, height=(int)%d, "
+        "format=(string)NV12, framerate=(fraction)%d/1 ! "
+        "nvvidconv flip-method=%d ! "
+        "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "
+        "videoconvert ! "
+        "video/x-raw, format=(string)BGR ! appsink"
+        % (
+            capture_width,
+            capture_height,
+            framerate,
+            flip_method,
+            display_width,
+            display_height,
+        )
+    )
+ 
+def show_camera():
+    cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
+ 
+    while cap.isOpened():
+        flag, img = cap.read()
+        cv2.imshow("CSI Camera", img)
+        kk = cv2.waitKey(1)
+ 
+        # do other things
+ 
+        if kk == ord('q'):  # 按下 q 键，退出
+            break
+ 
+    cap.release()
+    cv2.destroyAllWindows()
+    
+if __name__ == "__main__":
+    show_camera()
