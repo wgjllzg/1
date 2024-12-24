@@ -1,1 +1,91 @@
 
+python hardware.py csi://0
+[gstreamer] initialized gstreamer, version 1.14.5.0
+[gstreamer] gstCamera -- attempting to create device csi://0
+[gstreamer] gstCamera pipeline string:
+[gstreamer] nvarguscamerasrc sensor-id=0 ! video/x-raw(memory:NVMM), width=(int)1280, height=(int)720, framerate=30/1, format=(string)NV12 ! nvvidconv flip-method=2 ! video/x-raw(memory:NVMM) ! appsink name=mysink
+[gstreamer] gstCamera successfully created device csi://0
+[video]  created gstCamera from csi://0
+------------------------------------------------
+gstCamera video options:
+------------------------------------------------
+  -- URI: csi://0
+     - protocol:  csi
+     - location:  0
+  -- deviceType: csi
+  -- ioType:     input
+  -- width:      1280
+  -- height:     720
+  -- frameRate:  30
+  -- numBuffers: 4
+  -- zeroCopy:   true
+  -- flipMethod: rotate-180
+------------------------------------------------
+[OpenGL] glDisplay -- X screen 0 resolution:  1280x720
+[OpenGL] glDisplay -- X window resolution:    1280x720
+[OpenGL] glDisplay -- display device initialized (1280x720)
+[video]  created glDisplay from display://0
+------------------------------------------------
+glDisplay video options:
+------------------------------------------------
+  -- URI: display://0
+     - protocol:  display
+     - location:  0
+  -- deviceType: display
+  -- ioType:     output
+  -- width:      1280
+  -- height:     720
+  -- frameRate:  0
+  -- numBuffers: 4
+  -- zeroCopy:   true
+------------------------------------------------
+[gstreamer] opening gstCamera for streaming, transitioning pipeline to GST_STATE_PLAYING
+[gstreamer] gstreamer changed state from NULL to READY ==> mysink
+[gstreamer] gstreamer changed state from NULL to READY ==> capsfilter1
+[gstreamer] gstreamer changed state from NULL to READY ==> nvvconv0
+[gstreamer] gstreamer changed state from NULL to READY ==> capsfilter0
+[gstreamer] gstreamer changed state from NULL to READY ==> nvarguscamerasrc0
+[gstreamer] gstreamer changed state from NULL to READY ==> pipeline0
+[gstreamer] gstreamer changed state from READY to PAUSED ==> capsfilter1
+[gstreamer] gstreamer changed state from READY to PAUSED ==> nvvconv0
+[gstreamer] gstreamer changed state from READY to PAUSED ==> capsfilter0
+[gstreamer] gstreamer stream status CREATE ==> src
+[gstreamer] gstreamer changed state from READY to PAUSED ==> nvarguscamerasrc0
+[gstreamer] gstreamer changed state from READY to PAUSED ==> pipeline0
+[gstreamer] gstreamer message new-clock ==> pipeline0
+[gstreamer] gstreamer stream status ENTER ==> src
+[gstreamer] gstreamer changed state from PAUSED to PLAYING ==> capsfilter1
+[gstreamer] gstreamer changed state from PAUSED to PLAYING ==> nvvconv0
+[gstreamer] gstreamer changed state from PAUSED to PLAYING ==> capsfilter0
+[gstreamer] gstreamer changed state from PAUSED to PLAYING ==> nvarguscamerasrc0
+[gstreamer] gstreamer message stream-start ==> pipeline0
+Error generated. /dvs/git/dirty/git-master_linux/multimedia/nvgstreamer/gst-nvarguscamera/gstnvarguscamerasrc.cpp, execute:751 Failed to create CaptureSession
+[gstreamer] gstCamera -- end of stream (EOS)
+[gstreamer] gstreamer changed state from READY to PAUSED ==> mysink
+[gstreamer] gstreamer message async-done ==> pipeline0
+[gstreamer] gstreamer changed state from PAUSED to PLAYING ==> mysink
+[gstreamer] gstreamer changed state from PAUSED to PLAYING ==> pipeline0
+[gstreamer] gstreamer pipeline0 recieved EOS signal...
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a timeout occurred waiting for the next image buffer
+[gstreamer] gstCamera::Capture() -- a 
